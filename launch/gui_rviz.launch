@@ -1,0 +1,26 @@
+<launch>
+    <node name="franka_rqt_dashboard" pkg="rqt_gui" type="rqt_gui" respawn="false" output="screen" args="--perspective-file $(find kimm_franka_gui)/config/gui_rviz.perspective" />
+	
+
+    
+    <arg name="rvizconfig" default="$(find kimm_franka_gui)/config/franka_rviz.rviz" />
+	<param name="use_gui" value="true"/>
+	
+	
+	<group ns ="ns1">
+	    <param name="robot_description" command="cat $(find franka_panda_description)/franka_single/panda_arm_hand_l_rviz.urdf" />
+		<node pkg="tf2_ros" type="static_transform_publisher" name="odom" args="0 0 0 0 0 0 world panda_link0" />
+		<param name="rviz_urdf_path" type="string" value="$(find franka_panda_description)"/>
+   		<param name="rviz_urdf" type="string" value="/franka_single/panda_arm_hand_l_rviz.urdf"/>
+		<node name="robot_state_publisher" pkg="robot_state_publisher"
+			type="robot_state_publisher" respawn="true">
+			<param name="publish_frequency" value="100" />
+			<param name="rate" value="100" />
+		</node>
+		<node name="kimm_joint_planner_ros_interface_server" pkg="kimm_joint_planner_ros_interface" type="kimm_joint_planner_ros_interface_server" output="screen" >
+		</node>
+		<node name="kimm_se3_planner_ros_interface_server" pkg="kimm_se3_planner_ros_interface" type="kimm_se3_planner_ros_interface_server" output="screen" >
+		</node>
+	</group>
+	 
+</launch>

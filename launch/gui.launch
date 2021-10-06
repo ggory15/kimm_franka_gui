@@ -1,0 +1,4 @@
+<launch>
+    <node name="franka_rqt_dashboard" pkg="rqt_gui" type="rqt_gui" respawn="false" output="screen" args="--perspective-file $(find kimm_franka_gui)/config/gui.perspective" />
+   
+</launch>
