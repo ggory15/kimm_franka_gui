@@ -343,13 +343,13 @@ namespace kimm_franka_gui
             custom_ctrl_pub_.publish(int16_msg_);
         }
         virtual void jointctrlcb3(){
-            ui_.joint_t1->setText(QString::number(q_(2) * DEGREE, 'f', 3));
-            ui_.joint_t2->setText(QString::number(q_(3) * DEGREE, 'f', 3));
-            ui_.joint_t3->setText(QString::number(q_(4) * DEGREE, 'f', 3));
-            ui_.joint_t4->setText(QString::number(q_(5) * DEGREE, 'f', 3));
-            ui_.joint_t5->setText(QString::number(q_(6) * DEGREE, 'f', 3));
-            ui_.joint_t6->setText(QString::number(q_(7) * DEGREE, 'f', 3));
-            ui_.joint_t7->setText(QString::number(q_(8) * DEGREE, 'f', 3));
+            ui_.joint_t1->setText(QString::number(q_(0) * DEGREE, 'f', 3));
+            ui_.joint_t2->setText(QString::number(q_(1) * DEGREE, 'f', 3));
+            ui_.joint_t3->setText(QString::number(q_(2) * DEGREE, 'f', 3));
+            ui_.joint_t4->setText(QString::number(q_(3) * DEGREE, 'f', 3));
+            ui_.joint_t5->setText(QString::number(q_(4) * DEGREE, 'f', 3));
+            ui_.joint_t6->setText(QString::number(q_(5) * DEGREE, 'f', 3));
+            ui_.joint_t7->setText(QString::number(q_(6) * DEGREE, 'f', 3));
         }
         virtual void jointctrlcb4(){
             sensor_msgs::JointState t_joint;

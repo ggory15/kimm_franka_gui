@@ -34,21 +34,23 @@ namespace kimm_franka_gui
         package_dirs.push_back(model_path);
         string urdfFileName = package_dirs[0] + urdf_name;
         pinocchio::urdf::buildModel(urdfFileName, model_, false);       
-
+        ROS_INFO_STREAM(urdfFileName);
         run_pub_ = nh_.advertise<std_msgs::Bool>("/mujoco_ros_interface/sim_run", 100);
         quit_pub_ = nh_.advertise<std_msgs::Bool>("/mujoco_ros_interface/sim_quit", 100);
 
-        custom_ctrl_pub_ = nh_.advertise<std_msgs::Int16>("/mujoco_ros_interface/ctrl_type", 100);
+        
         ee_traj_resp_pub_ = nh_.advertise<visualization_msgs::MarkerArray>("/" + group_name + "/kimm_se3_plan_markers/robot/response", 100);
         joint_state_pub_ = nh_.advertise<sensor_msgs::JointState>("/" + group_name +"/joint_states", 100);
 
         if (issimulation_){
+            custom_ctrl_pub_ = nh_.advertise<std_msgs::Int16>("/mujoco_ros_interface/ctrl_type", 100);
             simtime_sub_ = nh_.subscribe("/mujoco_ros_interface/sim_time", 100, &FrankaGui::timerCallback, this);
             jointstate_sub_ = nh_.subscribe("/mujoco_ros_interface/joint_states", 100, &FrankaGui::jointStateCallback, this);
             torquestate_sub_ = nh_.subscribe("/mujoco_ros_interface/joint_set", 100, &FrankaGui::torqueStateCallback, this);
             ee_state_sub_ = nh_.subscribe("/mujoco_ros_interface/ee_state", 100, &FrankaGui::eeStateCallback, this);
         }
         else {
+            custom_ctrl_pub_ = nh_.advertise<std_msgs::Int16>("/" + group_name + "/real_robot/ctrl_type", 100);
             simtime_sub_ = nh_.subscribe("/" + group_name + "/time", 100, &FrankaGui::timerCallback, this);
             jointstate_sub_ = nh_.subscribe("/" + group_name + "/real_robot/joint_states", 100, &FrankaGui::jointStateCallback, this);
             torquestate_sub_ = nh_.subscribe("/" + group_name + "/real_robot/joint_set", 100, &FrankaGui::torqueStateCallback, this);
